@@ -60,6 +60,7 @@ function draw() {
             break;
         case STATEENUM.mainmenu:
             renderDisplayList(displayList, ctx);
+            ctx.fillText("X: " + mouseX + ", Y: " + mouseY, 600, 100);
             break;
         case STATEENUM.battlescreen:
             //renderDisplayList(spriteList, ctx);
@@ -115,9 +116,10 @@ function update() {
                 break;
             case STATEENUM.mainmenu:
                 var type = buttonStates(displayList);
-                if (type != "NULL")
+                if (type != "NULL") {
+                    alert(type);
                     gameState = STATEENUM.battlescreen;
-                alert(type);
+                }
                 break;
             case STATEENUM.battlescreen:
                 for (var i = 0; i < spriteList.length; i++) {
@@ -126,8 +128,6 @@ function update() {
                 break;
         }
     }
-    if (gameState === STATEENUM.mainmenu)
-
         clicked = false;
 }
 

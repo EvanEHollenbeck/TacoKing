@@ -22,12 +22,8 @@ function TacoButton(spriteImage, spriteImage2, text) {
     };
 
     this.inBounds = function (x, y) {
-        if (x >= this.positionX && x <= this.positionX + this.width && y >= this.positionY && y <= this.positionY + this.width) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        return (x >= this.positionX) && (x <= this.positionX + this.width) && (y >= this.positionY) && (y <= this.positionY + this.height);
+    };
 
 
     this.handleClicked = function (bool) {
@@ -36,7 +32,7 @@ function TacoButton(spriteImage, spriteImage2, text) {
         } else {
             this.sprite = spriteImage;
         }
-    }
+    };
 
     this.draw = function (g) {
         g.fillStyle = "rgb(0, 0, 0)";
