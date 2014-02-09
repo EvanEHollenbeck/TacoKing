@@ -8,21 +8,24 @@
 // Create a canvas to work on; this is the main game window
 // Get a context to draw with and
 var canvas = document.createElement("canvas");
-var IMAGES = ['banner2', 'button00'];
+var IMAGES = ['banner2', 'button00', 'button01'];
 var imageResources = [];
 var ctx = canvas.getContext("2d");
 var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
-var gameState = STATEENUM.loadingscreen, tacoButton, now, dt, last, SCREENCENTERX, SCREENCENTERY;
+var gameState = STATEENUM.loadingscreen,
+    tacoButton, now, dt, last, SCREENCENTERX, SCREENCENTERY,
+    mouseX = 0, mouseY = 0, clicked = false;
 
 //TODO: Create a loader that reacts to this event
 function onImagesLoaded(callValue) {
     imageResources = callValue;
-    tacoButton = new TacoButton(imageResources[1], "Start Game");
+    tacoButton = new TacoButton(imageResources[1], imageResources[2], "Start Game");
     tacoButton.setPosition(SCREENCENTERX - tacoButton.width / 2, SCREENCENTERY + 120);
 }
 
 // Initialization
 function initialize() {
+    addEventListener('click', handleClicks, true);
     last = getTime();
     loadImages(IMAGES, onImagesLoaded);
     ctx.canvas.width = 854;
@@ -30,6 +33,11 @@ function initialize() {
     SCREENCENTERX = ctx.canvas.width / 2;
     SCREENCENTERY = ctx.canvas.height / 2;
     document.body.appendChild(canvas);
+}
+
+
+function handleClicks() {
+    clicked = true;
 }
 
 // Initialize the canvas to default
@@ -48,9 +56,18 @@ function draw() {
     }
 }
 
+
 // Update game logic
 function update() {
 
+    if (clicked === true) {
+        if (gameState === STATEENUM.loadingscreen) {
+            if (tacoButton.inBounds(mouseX, mouseY)) {
+                tacoButton.handleClicked();
+            }
+        }
+        clicked = false;
+    }
 }
 
 function addListeners() {
