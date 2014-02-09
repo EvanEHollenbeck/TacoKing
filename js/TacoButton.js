@@ -17,7 +17,7 @@ function TacoButton(spriteImage, spriteImage2, text) {
     };
 
     this.inBounds = function (x, y) {
-        if (x >= this.positionX && x <= this.positionX + this.width && y >= this.positionY && y <= this.positionY - this.width) {
+        if (x >= this.positionX && x <= this.positionX + this.width && y >= this.positionY && y <= this.positionY + this.width) {
             return true;
         } else {
             return false;

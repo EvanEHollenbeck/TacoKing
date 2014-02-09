@@ -25,7 +25,7 @@ function onImagesLoaded(callValue) {
 
 // Initialization
 function initialize() {
-    addEventListener('click', handleClicks, true);
+    canvas.addEventListener('click', handleClicks, false);
     last = getTime();
     loadImages(IMAGES, onImagesLoaded);
     ctx.canvas.width = 854;
@@ -36,8 +36,11 @@ function initialize() {
 }
 
 
-function handleClicks() {
+function handleClicks(evt) {
     clicked = true;
+    var mousePos = getMousePos(canvas, evt);
+    mouseX = mousePos.x;
+    mouseY = mousePos.y;
 }
 
 // Initialize the canvas to default
@@ -57,6 +60,14 @@ function draw() {
 }
 
 
+function getMousePos(incanvas, evt) {
+    var rect = incanvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
+
 // Update game logic
 function update() {
 
@@ -69,6 +80,7 @@ function update() {
         clicked = false;
     }
 }
+
 
 function addListeners() {
 
