@@ -2,10 +2,10 @@
  * Main Javascript file for initializing the Taco King Saga app
  * Load all resources here then launch the main program
  *
- * @type {canvas}
+ * @type {}
  */
 // Static data for loading assets and controlling game flow
-var IMAGES = ['banner2', 'button00', 'button01', 'attack', 'hurt', 'jock', 'norm' ];
+var IMAGES = ['banner2', 'button00', 'button01', 'attack', 'hurt', 'jock', 'norm', 'victory', 'fail', 'hipster' ];
 var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
 
 // Create a canvas to work on; this is the main game window
@@ -47,12 +47,6 @@ function handleClicks(evt) {
     mouseY = mousePos.y;
 }
 
-// Initialize the canvas to default
-function reset() {
-    ctx.fillStyle = '#A8A8A8';
-    ctx.fillRect(0, 0, 854, 480);
-}
-
 // Draw function, draw based on current state
 function draw() {
     ctx.fillStyle = '#A8A8A8';
@@ -63,16 +57,10 @@ function draw() {
             tacoButton.draw(ctx);
             break;
         case STATEENUM.mainmenu:
-            renderDisplayList();
+            renderDisplayList(displayList, ctx);
             break;
         case STATEENUM.battlescreen:
             break;
-    }
-}
-
-function renderDisplayList() {
-    for (var i = 0; i < displayList.length; i++) {
-        displayList[i].draw(ctx);
     }
 }
 
@@ -85,14 +73,6 @@ function loadMainMenu() {
     displayList[2].setPosition(SCREENCENTERX - imageResources[1].width, 260);
     displayList.push(new TacoButton(imageResources[1], imageResources[2], "   BACK"));
     displayList[3].setPosition(SCREENCENTERX - imageResources[1].width, 340);
-}
-
-function getMousePos(incanvas, evt) {
-    var rect = incanvas.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    };
 }
 
 // Update game logic
@@ -114,11 +94,6 @@ function update() {
     clicked = false;
 }
 
-// Get current system time
-function getTime() {
-    return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
-}
-
 // process a single frame of the game
 function processFrame() {
     now = getTime();
@@ -131,5 +106,5 @@ function processFrame() {
 
 // initialize listeners, reset the canvas, and begin the game loop
 initialize();
-reset();
+reset(ctx);
 requestAnimationFrame(processFrame, canvas);

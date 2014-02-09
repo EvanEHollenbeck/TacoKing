@@ -1,11 +1,13 @@
-function animatedSprite(imageWidth) {
-    this.imageWidth = imageWidth;
-    this.numFrames = 2;
+function animatedSprite(spriteImage, frameW, frameH, frames) {
+    this.imageWidth = spriteImage.width;
+    this.numFrames = frames;
     this.frameIndex = 0;
-    this.frameWidth = 210;
-    this.frameHeight = 210;
+    this.frameWidth = frameW;
+    this.frameHeight = frameH;
     this.framePosX = 0;
     this.framePosY = 0;
+    this.rotation = 0;
+    this.rotRate = 0;
     this.canvasPosX = 0;
     this.canvasPosY = 0;
 
@@ -23,8 +25,15 @@ function animatedSprite(imageWidth) {
         }
     };
 
-    this.draw = function(image, ctx)
-    {
-        ctx.drawImage(image, this.framePosX, this.framePosY, this.frameWidth, this.frameHeight, this.canvasPosX, this.canvasPosY, this.frameWidth, this.frameHeight);
+    this.nextFrame = function () {
+        this.rotation += this.rotRate;
+        this.setFrameSequence();
+    };
+
+    this.draw = function (ctx) {
+        this.nextFrame();
+        ctx.rotate(this.rotation);
+        ctx.drawImage(spriteImage, this.framePosX, this.framePosY, this.frameWidth, this.frameHeight, this.canvasPosX, this.canvasPosY, this.frameWidth, this.frameHeight);
+        ctx.rotate(0);
     }
 }
