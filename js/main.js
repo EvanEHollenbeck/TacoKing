@@ -98,10 +98,9 @@ function buttonStates(blist) {
     for (var i = 0; i < blist.length; i++) {
         if (blist[i].inBounds(mouseX, mouseY)) {
             return blist[i].text;
-        } else {
-            return "NULL";
         }
     }
+    return "NULL";
 }
 
 // Update game logic
