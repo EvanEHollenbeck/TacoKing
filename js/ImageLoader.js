@@ -1,6 +1,3 @@
-/**
- * Created by SolMaverick on 08/02/14.
- */
 function loadImages(names, callback) {
     var i,
         image,
