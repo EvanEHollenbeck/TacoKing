@@ -1,4 +1,6 @@
-function animatedSprite(spriteImage, frameW, frameH, frames) {
+//
+//
+function AnimatedSprite(spriteImage, frameW, frameH, frames) {
     this.imageWidth = spriteImage.width;
     this.numFrames = frames;
     this.frameIndex = 0;
@@ -10,6 +12,9 @@ function animatedSprite(spriteImage, frameW, frameH, frames) {
     this.rotRate = 0;
     this.canvasPosX = 0;
     this.canvasPosY = 0;
+    this.alive = true;
+    this.currentTime = 0;
+    this.maxTime = 2000;
 
     this.setFrameSequence = function()
     {
@@ -31,9 +36,13 @@ function animatedSprite(spriteImage, frameW, frameH, frames) {
     };
 
     this.draw = function (ctx) {
-        this.nextFrame();
-        ctx.rotate(this.rotation);
-        ctx.drawImage(spriteImage, this.framePosX, this.framePosY, this.frameWidth, this.frameHeight, this.canvasPosX, this.canvasPosY, this.frameWidth, this.frameHeight);
-        ctx.rotate(0);
+        this.currentTime++;
+        if ((this.alive === true) && (this.currentTime > this.maxTime)) {
+            this.nextFrame();
+            ctx.rotate(this.rotation);
+            ctx.drawImage(spriteImage, this.framePosX, this.framePosY, this.frameWidth, this.frameHeight, this.canvasPosX, this.canvasPosY, this.frameWidth, this.frameHeight);
+            ctx.rotate(0);
+            this.currentTime = 0;
+        }
     }
 }
