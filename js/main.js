@@ -78,9 +78,9 @@ function loadMainMenu() {
 }
 
 function loadSprites() {
-    spriteList.push(new animatedSprite(imageResources[6], 210, 210, 2));
-    spriteList.push(new animatedSprite(imageResources[6], 210, 210, 2));
-    spriteList.push(new animatedSprite(imageResources[6], 210, 210, 2));
+    spriteList.push(new AnimatedSprite(imageResources[6], 210, 210, 2));
+    spriteList.push(new AnimatedSprite(imageResources[6], 210, 210, 2));
+    spriteList.push(new AnimatedSprite(imageResources[4], 210, 210, 2));
 }
 
 // Update game logic
