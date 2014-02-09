@@ -5,25 +5,25 @@
  * @type {canvas}
  */
 // Static data for loading assets and controlling game flow
-var IMAGES = ['banner2', 'button00', 'button01', 'attack' ];
+var IMAGES = ['banner2', 'button00', 'button01', 'attack', 'hurt', 'jock', 'norm' ];
 var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
-
 
 // Create a canvas to work on; this is the main game window
 // Get a context to draw with and
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 var imageResources = [];
+var displayList = [];
 var gameState = STATEENUM.loadingscreen,
     tacoButton, now, dt, last, SCREENCENTERX, SCREENCENTERY,
     mouseX = 0, mouseY = 0, clicked = false;
-
 
 //TODO: Create a loader that reacts to this event
 function onImagesLoaded(callValue) {
     imageResources = callValue;
     tacoButton = new TacoButton(imageResources[1], imageResources[2], "Start Game");
     tacoButton.setPosition(SCREENCENTERX - tacoButton.width / 2, SCREENCENTERY + 120);
+    loadMainMenu();
 }
 
 // Initialization
@@ -60,13 +60,31 @@ function draw() {
     switch (gameState) {
         case STATEENUM.loadingscreen:
             ctx.drawImage(imageResources[0], SCREENCENTERX - imageResources[0].width / 2, 0);
-            tacoButton.drawButton(ctx);
+            tacoButton.draw(ctx);
             break;
         case STATEENUM.mainmenu:
+            renderDisplayList();
             break;
         case STATEENUM.battlescreen:
             break;
     }
+}
+
+function renderDisplayList() {
+    for (var i = 0; i < displayList.length; i++) {
+        displayList[i].draw(ctx);
+    }
+}
+
+function loadMainMenu() {
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "TEST FIGHT"));
+    displayList[0].setPosition(SCREENCENTERX - imageResources[1].width, 100);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "FACEBOOK LOGIN"));
+    displayList[1].setPosition(SCREENCENTERX - imageResources[1].width, 180);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "OPTIONS"));
+    displayList[2].setPosition(SCREENCENTERX - imageResources[1].width, 260);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "BACK"));
+    displayList[3].setPosition(SCREENCENTERX - imageResources[1].width, 340);
 }
 
 function getMousePos(incanvas, evt) {

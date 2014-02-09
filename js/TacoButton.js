@@ -28,7 +28,7 @@ function TacoButton(spriteImage, spriteImage2, text) {
         this.sprite = spriteImage2;
     };
 
-    this.drawButton = function ( g ) {
+    this.draw = function (g) {
         g.fillStyle = "rgb(0, 0, 0)";
         g.font = "40px Calibri";
         g.textAlign = "left";
