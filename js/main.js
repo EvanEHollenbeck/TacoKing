@@ -1,34 +1,39 @@
+/**
+ * Main Javascript file for initializing the Taco King Saga app
+ * Load all resources here then launch the main program
+ *
+ * @type {HTMLElement}
+ */
+
 // Create a canvas to work on; this is the main game window
+// Get a context to draw with and
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
-var gameState = STATEENUM.loadingscreen;
-canvas.width = 854;
-canvas.height = 480;
-document.body.appendChild(canvas);
+var gameState = STATEENUM.loadingscreen, tacoButton, imageResources, now, dt,
+    last;
 
-// Background image
-var bgReady = false;
-var bgImage = new Image();
-bgImage.onload = function () {
-    bgReady = true;
-};
-bgImage.src = "img/banner2.png";
+function onImagesLoaded() {
 
-//Button image
-var buReady = false;
-var buImage = new Image();
-buImage.onload = function () {
-    buReady = true;
 }
-buImage.src = "img/button2.png";
 
-var tacoButton = new TacoButton(buImage, "HELLO");
+// Initialization
+function initialize() {
+    last = getTime();
+    imageResources = loadImages(imageNames, onImagesLoaded)
+    canvas.width = 854;
+    canvas.height = 480;
+    document.body.appendChild(canvas);
+    tacoButton = new TacoButton(imageResources[0], "HELLO");
+}
 
+// Initialize the canvas to default
 function reset() {
-
+    ctx.fillStyle = '#A8A8A8';
+    ctx.fillRect(0, 0, 854, 480);
 }
 
+// Draw function, draw based on current state
 function draw() {
     ctx.fillStyle = '#A8A8A8';
     ctx.fillRect(0, 0, 854, 480);
@@ -38,25 +43,26 @@ function draw() {
     }
 }
 
+// Update game logic
 function update() {
 
 }
 
+// Get current system time
 function getTime() {
     return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 };
 
-var now, dt,
-    last = getTime();
 
-function frame() {
+function processFrame() {
     now = getTime();
     dt = (now - last) / 1000;    // duration in seconds
     update();
     draw();
     last = now;
-    requestAnimationFrame(frame, canvas);
+    requestAnimationFrame(processFrame, canvas);
 }
 
+initialize();
 reset();
-requestAnimationFrame(frame, canvas);
+requestAnimationFrame(processFrame, canvas);
