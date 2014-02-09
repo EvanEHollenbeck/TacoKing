@@ -12,21 +12,24 @@ var IMAGES = ['banner2', 'button00'];
 var imageResources = [];
 var ctx = canvas.getContext("2d");
 var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
-var gameState = STATEENUM.loadingscreen, tacoButton, now, dt,
-    last;
+var gameState = STATEENUM.loadingscreen, tacoButton, now, dt, last, SCREENCENTERX, SCREENCENTERY;
 
+//TODO: Create a loader that reacts to this event
 function onImagesLoaded(callValue) {
     imageResources = callValue;
+    tacoButton = new TacoButton(imageResources[1], "Start Game");
+    tacoButton.setPosition(SCREENCENTERX - tacoButton.width / 2, SCREENCENTERY + 120);
 }
 
 // Initialization
 function initialize() {
     last = getTime();
     loadImages(IMAGES, onImagesLoaded);
-    canvas.width = 854;
-    canvas.height = 480;
+    ctx.canvas.width = 854;
+    ctx.canvas.height = 480;
+    SCREENCENTERX = ctx.canvas.width / 2;
+    SCREENCENTERY = ctx.canvas.height / 2;
     document.body.appendChild(canvas);
-    tacoButton = new TacoButton(imageResources[1], "HELLO");
 }
 
 // Initialize the canvas to default
@@ -40,7 +43,7 @@ function draw() {
     ctx.fillStyle = '#A8A8A8';
     ctx.fillRect(0, 0, 854, 480);
     if (gameState === STATEENUM.loadingscreen) {
-        ctx.drawImage(imageResources[0], 0, 0);
+        ctx.drawImage(imageResources[0], SCREENCENTERX - imageResources[0].width / 2, 0);
         tacoButton.drawButton(ctx);
     }
 }
