@@ -1,3 +1,12 @@
+/**
+ * Image loader function for preloading a large set of images.
+ * Returns the array of images via a callback when loading has finished
+ * completely.
+ * @Author James Yoo
+ * @param names
+ * @param callback
+ */
+
 function loadImages(names, callback) {
     var i,
         image,
