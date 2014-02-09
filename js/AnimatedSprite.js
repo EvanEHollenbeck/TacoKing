@@ -31,17 +31,19 @@ function AnimatedSprite(spriteImage, frameW, frameH, frames) {
     };
 
     this.nextFrame = function () {
-        this.rotation += this.rotRate;
-        this.setFrameSequence();
+        if (this.currentTime > this.maxTime) {
+            this.rotation += this.rotRate;
+            this.setFrameSequence();
+            this.currentTime = 0;
+        }
     };
 
     this.draw = function (ctx) {
-        if ((this.alive === true) && (this.currentTime > this.maxTime)) {
+        if (this.alive === true) {
             this.nextFrame();
             ctx.rotate(this.rotation);
             ctx.drawImage(spriteImage, this.framePosX, this.framePosY, this.frameWidth, this.frameHeight, this.canvasPosX, this.canvasPosY, this.frameWidth, this.frameHeight);
             ctx.rotate(0);
-            this.currentTime = 0;
         }
         this.currentTime++;
     }

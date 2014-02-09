@@ -58,8 +58,8 @@ function draw() {
             tacoButton.draw(ctx);
             break;
         case STATEENUM.mainmenu:
-            renderDisplayList(displayList, ctx);
             renderDisplayList(spriteList, ctx);
+            renderDisplayList(displayList, ctx);
             break;
         case STATEENUM.battlescreen:
             break;
