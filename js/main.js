@@ -4,16 +4,16 @@
  *
  * @type {}
  */
-// Static data for loading assets and controlling game flow
-var IMAGES = ['banner2', 'button00', 'button01', 'attack', 'hurt', 'jock', 'norm', 'victory', 'fail', 'hipster' ];
-var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
 
 // Create a canvas to work on; this is the main game window
 // Get a context to draw with and
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-var imageResources = [];
-var displayList = [];
+
+// Display lists and data
+var imageResources = [], displayList = [], spriteList = [];
+
+// State data
 var gameState = STATEENUM.loadingscreen,
     tacoButton, now, dt, last, SCREENCENTERX, SCREENCENTERY,
     mouseX = 0, mouseY = 0, clicked = false;
@@ -24,6 +24,7 @@ function onImagesLoaded(callValue) {
     tacoButton = new TacoButton(imageResources[1], imageResources[2], "  START");
     tacoButton.setPosition(SCREENCENTERX - tacoButton.width / 2, SCREENCENTERY + 120);
     loadMainMenu();
+    loadSprites();
 }
 
 // Initialization
@@ -58,6 +59,7 @@ function draw() {
             break;
         case STATEENUM.mainmenu:
             renderDisplayList(displayList, ctx);
+            renderDisplayList(spriteList, ctx);
             break;
         case STATEENUM.battlescreen:
             break;
@@ -75,6 +77,12 @@ function loadMainMenu() {
     displayList[3].setPosition(SCREENCENTERX - imageResources[1].width, 340);
 }
 
+function loadSprites() {
+    spriteList.push(new animatedSprite(imageResources[6], 210, 210, 2));
+    spriteList.push(new animatedSprite(imageResources[6], 210, 210, 2));
+    spriteList.push(new animatedSprite(imageResources[6], 210, 210, 2));
+}
+
 // Update game logic
 function update() {
     if (clicked === true) {
@@ -86,6 +94,9 @@ function update() {
                 }
                 break;
             case STATEENUM.mainmenu:
+                for (var i = 0; i < spriteList.length; i++) {
+                    spriteList[i].nextFrame();
+                }
                 break;
             case STATEENUM.battlescreen:
                 break;
