@@ -58,10 +58,10 @@ function draw() {
             tacoButton.draw(ctx);
             break;
         case STATEENUM.mainmenu:
-            renderDisplayList(spriteList, ctx);
             renderDisplayList(displayList, ctx);
             break;
         case STATEENUM.battlescreen:
+            renderDisplayList(spriteList, ctx);
             break;
     }
 }
@@ -81,6 +81,7 @@ function loadSprites() {
     spriteList.push(new AnimatedSprite(imageResources[6], 210, 210, 2));
     spriteList[0].setPosition( new Vector( 0,0 ) );
     spriteList[0].maxTime = 50;
+    spriteList[0].rotRate = 0.2;
     spriteList.push(new AnimatedSprite(imageResources[5], 210, 210, 2));
     spriteList[1].setPosition( new Vector( 220,0 ) );
     spriteList[1].maxTime = 100;

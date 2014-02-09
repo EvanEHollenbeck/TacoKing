@@ -46,9 +46,11 @@ function AnimatedSprite(spriteImage, frameW, frameH, frames) {
     this.draw = function (ctx) {
         if (this.alive === true) {
             this.nextFrame();
-            ctx.rotate(this.rotation);
+            ctx.save();
+            //ctx.translate( this.canvasPosX, this.canvasPosY );
+            //ctx.rotate(this.rotation);
             ctx.drawImage(spriteImage, this.framePosX, this.framePosY, this.frameWidth, this.frameHeight, this.canvasPosX, this.canvasPosY, this.frameWidth, this.frameHeight);
-            ctx.rotate(0);
+            ctx.restore();
         }
         this.currentTime++;
     }
