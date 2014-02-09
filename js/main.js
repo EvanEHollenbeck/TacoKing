@@ -30,6 +30,7 @@ function onImagesLoaded(callValue) {
 // Initialization
 function initialize() {
     canvas.addEventListener('click', handleClicks, false);
+    //canvas.addEventListener('onmousemove', handleMoves, false);
     last = getTime();
     loadImages(IMAGES, onImagesLoaded);
     ctx.canvas.width = 854;
@@ -61,20 +62,22 @@ function draw() {
             renderDisplayList(displayList, ctx);
             break;
         case STATEENUM.battlescreen:
-            renderDisplayList(spriteList, ctx);
+            //renderDisplayList(spriteList, ctx);
             break;
     }
 }
 
 function loadMainMenu() {
-    displayList.push(new TacoButton(imageResources[1], imageResources[2], "  FIGHT"));
-    displayList[0].setPosition(SCREENCENTERX - imageResources[1].width, 100);
-    displayList.push(new TacoButton(imageResources[1], imageResources[2], "  LOGIN"));
-    displayList[1].setPosition(SCREENCENTERX - imageResources[1].width, 180);
-    displayList.push(new TacoButton(imageResources[1], imageResources[2], "OPTIONS"));
-    displayList[2].setPosition(SCREENCENTERX - imageResources[1].width, 260);
-    displayList.push(new TacoButton(imageResources[1], imageResources[2], "   BACK"));
-    displayList[3].setPosition(SCREENCENTERX - imageResources[1].width, 340);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "HIPSTER"));
+    displayList[0].setPosition(SCREENCENTERX - 30 - imageResources[1].width, 30);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "   JOCK"));
+    displayList[1].setPosition(SCREENCENTERX - 30 - imageResources[1].width, 110);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "   GEEK"));
+    displayList[2].setPosition(SCREENCENTERX - 30 - imageResources[1].width, 190);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], " HERMIT"));
+    displayList[3].setPosition(SCREENCENTERX - 30 - imageResources[1].width, 270);
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], " SOCIAL"));
+    displayList[4].setPosition(SCREENCENTERX - 30 - imageResources[1].width, 350);
 }
 
 function loadSprites() {
@@ -90,26 +93,42 @@ function loadSprites() {
     spriteList[2].maxTime = 30;
 }
 
+function buttonStates(blist) {
+    for (var i = 0; i < blist.length; i++) {
+        if (blist[i].inBounds(mouseX, mouseY)) {
+            return blist[i].text;
+        } else {
+            return "NULL";
+        }
+    }
+}
+
 // Update game logic
 function update() {
     if (clicked === true) {
         switch (gameState) {
             case STATEENUM.loadingscreen:
                 if (tacoButton.inBounds(mouseX, mouseY)) {
-                    tacoButton.handleClicked();
+                    tacoButton.handleClicked(true);
                     gameState = STATEENUM.mainmenu;
                 }
                 break;
             case STATEENUM.mainmenu:
+                var type = buttonStates(displayList);
+                if (type != "NULL")
+                    gameState = STATEENUM.battlescreen;
+                alert(type);
+                break;
+            case STATEENUM.battlescreen:
                 for (var i = 0; i < spriteList.length; i++) {
                     spriteList[i].nextFrame();
                 }
                 break;
-            case STATEENUM.battlescreen:
-                break;
         }
     }
-    clicked = false;
+    if (gameState === STATEENUM.mainmenu)
+
+        clicked = false;
 }
 
 // process a single frame of the game

@@ -29,9 +29,14 @@ function TacoButton(spriteImage, spriteImage2, text) {
         }
     }
 
-    this.handleClicked = function () {
-        this.sprite = spriteImage2;
-    };
+
+    this.handleClicked = function (bool) {
+        if (bool) {
+            this.sprite = spriteImage2;
+        } else {
+            this.sprite = spriteImage;
+        }
+    }
 
     this.draw = function (g) {
         g.fillStyle = "rgb(0, 0, 0)";
