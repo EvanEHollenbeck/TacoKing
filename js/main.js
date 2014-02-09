@@ -48,6 +48,10 @@ function update() {
 
 }
 
+function addListeners() {
+
+}
+
 // Get current system time
 function getTime() {
     return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
@@ -64,5 +68,6 @@ function processFrame() {
 }
 
 initialize();
+addListeners();
 reset();
 requestAnimationFrame(processFrame, canvas);
