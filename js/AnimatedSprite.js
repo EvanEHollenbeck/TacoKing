@@ -16,6 +16,11 @@ function AnimatedSprite(spriteImage, frameW, frameH, frames) {
     this.currentTime = 0;
     this.maxTime = 100;
 
+    this.setPosition = function ( pos ) {
+        this.canvasPosX = pos.x;
+        this.canvasPosY = pos.y;
+    };
+
     this.setFrameSequence = function()
     {
         this.framePosX += this.frameWidth;

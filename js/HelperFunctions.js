@@ -16,6 +16,11 @@ function getMousePos(incanvas, evt) {
     };
 }
 
+function Vector ( x, y ) {
+    this.x = x;
+    this.y = y;
+}
+
 // Initialize the canvas to default
 function reset(ctx) {
     ctx.fillStyle = '#A8A8A8';

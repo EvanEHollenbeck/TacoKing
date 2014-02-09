@@ -79,8 +79,14 @@ function loadMainMenu() {
 
 function loadSprites() {
     spriteList.push(new AnimatedSprite(imageResources[6], 210, 210, 2));
-    spriteList.push(new AnimatedSprite(imageResources[6], 210, 210, 2));
+    spriteList[0].setPosition( new Vector( 0,0 ) );
+    spriteList[0].maxTime = 50;
+    spriteList.push(new AnimatedSprite(imageResources[5], 210, 210, 2));
+    spriteList[1].setPosition( new Vector( 220,0 ) );
+    spriteList[1].maxTime = 100;
     spriteList.push(new AnimatedSprite(imageResources[4], 210, 210, 2));
+    spriteList[2].setPosition( new Vector( 440,0 ) );
+    spriteList[2].maxTime = 30;
 }
 
 // Update game logic
