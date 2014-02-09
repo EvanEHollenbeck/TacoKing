@@ -8,23 +8,25 @@
 // Create a canvas to work on; this is the main game window
 // Get a context to draw with and
 var canvas = document.createElement("canvas");
+var IMAGES = ['banner2', 'button00'];
+var imageResources = [];
 var ctx = canvas.getContext("2d");
 var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
-var gameState = STATEENUM.loadingscreen, tacoButton, imageResources, now, dt,
+var gameState = STATEENUM.loadingscreen, tacoButton, now, dt,
     last;
 
-function onImagesLoaded() {
-
+function onImagesLoaded(callValue) {
+    imageResources = callValue;
 }
 
 // Initialization
 function initialize() {
     last = getTime();
-    imageResources = loadImages(imageNames, onImagesLoaded)
+    loadImages(IMAGES, onImagesLoaded);
     canvas.width = 854;
     canvas.height = 480;
     document.body.appendChild(canvas);
-    tacoButton = new TacoButton(imageResources[0], "HELLO");
+    tacoButton = new TacoButton(imageResources[1], "HELLO");
 }
 
 // Initialize the canvas to default
@@ -38,7 +40,7 @@ function draw() {
     ctx.fillStyle = '#A8A8A8';
     ctx.fillRect(0, 0, 854, 480);
     if (gameState === STATEENUM.loadingscreen) {
-        ctx.drawImage(bgImage, 0, 0);
+        ctx.drawImage(imageResources[0], 0, 0);
         tacoButton.drawButton(ctx);
     }
 }
