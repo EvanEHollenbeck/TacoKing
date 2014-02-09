@@ -2,19 +2,22 @@
  * Main Javascript file for initializing the Taco King Saga app
  * Load all resources here then launch the main program
  *
- * @type {HTMLElement}
+ * @type {canvas}
  */
+// Static data for loading assets and controlling game flow
+var IMAGES = ['banner2', 'button00', 'button01', 'attack' ];
+var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
+
 
 // Create a canvas to work on; this is the main game window
 // Get a context to draw with and
 var canvas = document.createElement("canvas");
-var IMAGES = ['banner2', 'button00', 'button01'];
-var imageResources = [];
 var ctx = canvas.getContext("2d");
-var STATEENUM = Object.freeze = ({ loadingscreen: {}, mainmenu: {}, battlescreen: {}});
+var imageResources = [];
 var gameState = STATEENUM.loadingscreen,
     tacoButton, now, dt, last, SCREENCENTERX, SCREENCENTERY,
     mouseX = 0, mouseY = 0, clicked = false;
+
 
 //TODO: Create a loader that reacts to this event
 function onImagesLoaded(callValue) {
@@ -35,7 +38,8 @@ function initialize() {
     document.body.appendChild(canvas);
 }
 
-
+// Whether a click has happened since last frame, update mouse position
+//TODO mouse position should be updated when mouse is moved, not when clicked.
 function handleClicks(evt) {
     clicked = true;
     var mousePos = getMousePos(canvas, evt);
@@ -53,12 +57,17 @@ function reset() {
 function draw() {
     ctx.fillStyle = '#A8A8A8';
     ctx.fillRect(0, 0, 854, 480);
-    if (gameState === STATEENUM.loadingscreen) {
-        ctx.drawImage(imageResources[0], SCREENCENTERX - imageResources[0].width / 2, 0);
-        tacoButton.drawButton(ctx);
+    switch (gameState) {
+        case STATEENUM.loadingscreen:
+            ctx.drawImage(imageResources[0], SCREENCENTERX - imageResources[0].width / 2, 0);
+            tacoButton.drawButton(ctx);
+            break;
+        case STATEENUM.mainmenu:
+            break;
+        case STATEENUM.battlescreen:
+            break;
     }
 }
-
 
 function getMousePos(incanvas, evt) {
     var rect = incanvas.getBoundingClientRect();
@@ -70,28 +79,29 @@ function getMousePos(incanvas, evt) {
 
 // Update game logic
 function update() {
-
     if (clicked === true) {
-        if (gameState === STATEENUM.loadingscreen) {
-            if (tacoButton.inBounds(mouseX, mouseY)) {
-                tacoButton.handleClicked();
-            }
+        switch (gameState) {
+            case STATEENUM.loadingscreen:
+                if (tacoButton.inBounds(mouseX, mouseY)) {
+                    tacoButton.handleClicked();
+                    gameState = STATEENUM.mainmenu;
+                }
+                break;
+            case STATEENUM.mainmenu:
+                break;
+            case STATEENUM.battlescreen:
+                break;
         }
-        clicked = false;
     }
-}
-
-
-function addListeners() {
-
+    clicked = false;
 }
 
 // Get current system time
 function getTime() {
     return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
-};
+}
 
-
+// process a single frame of the game
 function processFrame() {
     now = getTime();
     dt = (now - last) / 1000;    // duration in seconds
@@ -101,7 +111,7 @@ function processFrame() {
     requestAnimationFrame(processFrame, canvas);
 }
 
+// initialize listeners, reset the canvas, and begin the game loop
 initialize();
-addListeners();
 reset();
 requestAnimationFrame(processFrame, canvas);
