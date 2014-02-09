@@ -156,15 +156,27 @@ function update() {
                     spriteList[9].alive = false;
                     spriteList[10].alive = false;
                     spriteList[13].alive = true;
+
                 }
                 break;
             case STATEENUM.mainmenu:
                 type = buttonStates(displayList);
                 if (type != "NULL") {
                     gameState = STATEENUM.battlescreen;
+                    spriteList[0].alive = true;
+                    spriteList[1].alive = true;
+                    spriteList[2].alive = true;
+                    spriteList[3].alive = true;
+                    spriteList[4].alive = true;
+                    spriteList[5].alive = true;
+                    spriteList[6].alive = true;
+                    spriteList[7].alive = true;
+                    spriteList[8].alive = true;
                 }
                 break;
             case STATEENUM.battlescreen:
+
+
                 break;
         }
     }
