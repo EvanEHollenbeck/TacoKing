@@ -9,7 +9,12 @@ function TacoButton(spriteImage, spriteImage2, text) {
     this.positionY = 0;
     this.width = spriteImage.width;
     this.height = spriteImage.height;
-    this.offset = this.text.length * 5;
+    if (this.text.length >= 8) {
+        this.offset = (this.text.length - 8) * 5;
+    } else {
+        this.offset = (this.text.length + 8) * 5;
+    }
+
 
     this.setPosition = function (pos, posY) {
         this.positionX = pos;

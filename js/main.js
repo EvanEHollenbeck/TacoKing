@@ -21,7 +21,7 @@ var gameState = STATEENUM.loadingscreen,
 //TODO: Create a loader that reacts to this event
 function onImagesLoaded(callValue) {
     imageResources = callValue;
-    tacoButton = new TacoButton(imageResources[1], imageResources[2], "Start Game");
+    tacoButton = new TacoButton(imageResources[1], imageResources[2], "  START");
     tacoButton.setPosition(SCREENCENTERX - tacoButton.width / 2, SCREENCENTERY + 120);
     loadMainMenu();
 }
@@ -77,13 +77,13 @@ function renderDisplayList() {
 }
 
 function loadMainMenu() {
-    displayList.push(new TacoButton(imageResources[1], imageResources[2], "TEST FIGHT"));
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "  FIGHT"));
     displayList[0].setPosition(SCREENCENTERX - imageResources[1].width, 100);
-    displayList.push(new TacoButton(imageResources[1], imageResources[2], "FACEBOOK LOGIN"));
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "  LOGIN"));
     displayList[1].setPosition(SCREENCENTERX - imageResources[1].width, 180);
     displayList.push(new TacoButton(imageResources[1], imageResources[2], "OPTIONS"));
     displayList[2].setPosition(SCREENCENTERX - imageResources[1].width, 260);
-    displayList.push(new TacoButton(imageResources[1], imageResources[2], "BACK"));
+    displayList.push(new TacoButton(imageResources[1], imageResources[2], "   BACK"));
     displayList[3].setPosition(SCREENCENTERX - imageResources[1].width, 340);
 }
 
