@@ -14,7 +14,7 @@ function AnimatedSprite(spriteImage, frameW, frameH, frames) {
     this.canvasPosY = 0;
     this.alive = true;
     this.currentTime = 0;
-    this.maxTime = 2000;
+    this.maxTime = 100;
 
     this.setFrameSequence = function()
     {
@@ -36,7 +36,6 @@ function AnimatedSprite(spriteImage, frameW, frameH, frames) {
     };
 
     this.draw = function (ctx) {
-        this.currentTime++;
         if ((this.alive === true) && (this.currentTime > this.maxTime)) {
             this.nextFrame();
             ctx.rotate(this.rotation);
@@ -44,5 +43,6 @@ function AnimatedSprite(spriteImage, frameW, frameH, frames) {
             ctx.rotate(0);
             this.currentTime = 0;
         }
+        this.currentTime++;
     }
 }
